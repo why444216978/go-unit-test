@@ -34,7 +34,7 @@ func handle(db *sql.DB) (err error) {
 		case nil:
 			err = tx.Commit()
 		default:
-			tx.Rollback()
+			err = tx.Rollback()
 		}
 	}()
 
