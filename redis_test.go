@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-redis/redis/v8"
 	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_handleRedis(t *testing.T) {
@@ -14,5 +15,7 @@ func Test_handleRedis(t *testing.T) {
 	c := NewMockCmdable(ctl)
 	c.EXPECT().Get(gomock.Any(), gomock.Any()).Times(1).Return(redis.NewStringResult("redis", nil))
 
-	handleRedis(c)
+	res, err := handleRedis(c)
+	assert.Nil(t, err)
+	assert.Equal(t, "redis", res)
 }
